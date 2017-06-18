@@ -7,9 +7,11 @@
 //
 
 import UIKit
+import CoreBluetooth
 
-class TimerCell: UITableViewCell {
+class TimerCell: UITableViewCell,CBPeripheralDelegate {
 
+    var parentVCtrl:TableViewController?
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -36,6 +38,9 @@ class TimerCell: UITableViewCell {
     @IBAction func clickTimerSegment(_ sender: UISegmentedControl) {
         print("[timer] select_value:\(sender.selectedSegmentIndex)")
         let timerValueArry = Array.init(arrayLiteral: "0", "1", "2", "4")
+        let sendedData = timerValueArry[sender.selectedSegmentIndex].data(using: .utf8)
+        
+        self.parentVCtrl?.currentPeripheral?.writeValue(sendedData!, for: (self.parentVCtrl?.mainCharacteristic)!, type: CBCharacteristicWriteType.withResponse)
 
     }
 }

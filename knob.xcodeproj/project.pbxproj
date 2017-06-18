@@ -17,6 +17,7 @@
 		C68AEB321EF21F010033CCB6 /* knob.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C68AEB301EF21F010033CCB6 /* knob.xcdatamodeld */; };
 		C68AEB341EF21F010033CCB6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C68AEB331EF21F010033CCB6 /* Assets.xcassets */; };
 		C68AEB371EF21F010033CCB6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C68AEB351EF21F010033CCB6 /* LaunchScreen.storyboard */; };
+		CFF76B3F1EF50CFD001E93A1 /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CFF76B3E1EF50CFD001E93A1 /* CoreBluetooth.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +33,7 @@
 		C68AEB331EF21F010033CCB6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C68AEB361EF21F010033CCB6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		C68AEB381EF21F010033CCB6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CFF76B3E1EF50CFD001E93A1 /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -39,6 +41,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CFF76B3F1EF50CFD001E93A1 /* CoreBluetooth.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -60,6 +63,7 @@
 			children = (
 				C68AEB281EF21F010033CCB6 /* knob */,
 				C68AEB271EF21F010033CCB6 /* Products */,
+				CFF76B3D1EF50CFD001E93A1 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -85,6 +89,14 @@
 				C624987F1EF2673D0004F50D /* Cell */,
 			);
 			path = knob;
+			sourceTree = "<group>";
+		};
+		CFF76B3D1EF50CFD001E93A1 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				CFF76B3E1EF50CFD001E93A1 /* CoreBluetooth.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -119,6 +131,7 @@
 				TargetAttributes = {
 					C68AEB251EF21F010033CCB6 = {
 						CreatedOnToolsVersion = 8.3.2;
+						DevelopmentTeam = HMJCA92VBJ;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -290,6 +303,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = HMJCA92VBJ;
 				INFOPLIST_FILE = knob/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = tw.com.binson.knob;
@@ -302,6 +316,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = HMJCA92VBJ;
 				INFOPLIST_FILE = knob/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = tw.com.binson.knob;

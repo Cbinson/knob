@@ -11,6 +11,8 @@ import UIKit
 class InfoCell: UITableViewCell {
 
     @IBOutlet weak var onoffSwitch: UISwitch!
+    @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var uuidLabel: UILabel!
 
     var parentVCtrl:TableViewController?
 
