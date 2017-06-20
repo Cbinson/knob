@@ -131,7 +131,7 @@
 				TargetAttributes = {
 					C68AEB251EF21F010033CCB6 = {
 						CreatedOnToolsVersion = 8.3.2;
-						DevelopmentTeam = HMJCA92VBJ;
+						DevelopmentTeam = TVFFD9C8WQ;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -303,10 +303,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = HMJCA92VBJ;
+				DEVELOPMENT_TEAM = TVFFD9C8WQ;
 				INFOPLIST_FILE = knob/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = tw.com.binson.knob;
+				PRODUCT_BUNDLE_IDENTIFIER = tw.com.binson15.knob;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
@@ -316,10 +316,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = HMJCA92VBJ;
+				DEVELOPMENT_TEAM = TVFFD9C8WQ;
 				INFOPLIST_FILE = knob/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = tw.com.binson.knob;
+				PRODUCT_BUNDLE_IDENTIFIER = tw.com.binson15.knob;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};

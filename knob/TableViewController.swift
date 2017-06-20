@@ -14,16 +14,18 @@ class TableViewController: UITableViewController, CBCentralManagerDelegate, CBPe
     let kCFUID = "FFE0"
     let kUUID = "DBFC83AF-D534-459D-B040-D189A80E1BF7"
     let kName = "BLE"
-    
+
     
     @IBOutlet var mainTableView: UITableView!
-    
+
     var isConnect:Bool?
-    
+    var isPownOn:Bool?
+
+
     var currentPeripheral:CBPeripheral?
     var manager:CBCentralManager?
     var mainCharacteristic:CBCharacteristic? = nil
-    
+
     
 
     override func viewDidLoad() {
@@ -39,13 +41,36 @@ class TableViewController: UITableViewController, CBCentralManagerDelegate, CBPe
         self.mainTableView.rowHeight = UITableViewAutomaticDimension
 
         self.isConnect = false
-        
-        self.manager = CBCentralManager.init(delegate: self, queue: nil)
+        self.isPownOn = false
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+
+
+    // MARK - method
+    func startManagerBle() {
+        self.manager = CBCentralManager.init(delegate: self, queue: nil)
+    }
+
+    func disConnectBle() {
+        self.isConnect = false
+        self.isPownOn = false
+        
+        self.manager?.cancelPeripheralConnection(self.currentPeripheral!)
+
+        self.manager = nil
+        self.currentPeripheral = nil
+        self.mainCharacteristic = nil
+
+        self.mainTableView.reloadData()
+    }
+
+    func sendData(_ sendData:String) {
+        let data = sendData.data(using: .utf8)
+        self.currentPeripheral?.writeValue(data!, for: self.mainCharacteristic!, type: CBCharacteristicWriteType.withResponse)
     }
 
     
@@ -95,40 +120,52 @@ class TableViewController: UITableViewController, CBCentralManagerDelegate, CBPe
         print("find device")
         
         if peripheral.name == kName {
-//            self.currentPeripheral = peripheral
-//            
-//            self.manager?.cancelPeripheralConnection(peripheral)
-//            
-//            self.mainTableView.reloadData()
-            
+
             self.printInfo(peripheral)
+
+            let connectState = self.checkIsConnected(peripheral)
+            if connectState {
+                self.manager?.stopScan()
+            }else{
+                if self.currentPeripheral == nil {
+                    self.manager?.connect(peripheral, options: nil)
+                    self.currentPeripheral = peripheral
+                }
+            }
+
         }
     }
     
     func printInfo(_ peripheral:CBPeripheral)  {
-        print("name:\(peripheral.name)")
+        print("name:\(peripheral.name!)")
         print("uuid:\(peripheral.identifier.uuidString)")
         
         var connectState = ""
-        if peripheral.state == .disconnected || peripheral.state == .disconnecting {
-            connectState = "disconnected"
-            
-            if self.currentPeripheral == nil {
-                self.manager?.connect(peripheral, options: nil)
-                self.currentPeripheral = peripheral
-            }
-            
-        }else{
+
+        if self.checkIsConnected(peripheral) {
             connectState = "connected"
-            
-            self.manager?.stopScan()
+        }else{
+            connectState = "disconnected"
         }
         print("connect_state:\(connectState)")
+
+
+    }
+
+    func checkIsConnected(_ peripheral:CBPeripheral) -> Bool {
+        var connectState:Bool!
+        if peripheral.state == .disconnected || peripheral.state == .disconnecting {
+            connectState = false
+        }else{
+            connectState = true
+        }
+
+        return connectState
     }
     
     public func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
         
-        print("[connect] name:\(peripheral.name)")
+        print("[connect] name:\(peripheral.name!)")
         print("[connect] uuid:\(peripheral.identifier.uuidString)")
 
 
@@ -138,6 +175,7 @@ class TableViewController: UITableViewController, CBCentralManagerDelegate, CBPe
 
         if peripheral.name == kName {
             self.currentPeripheral = peripheral
+            self.isConnect = true
             
             peripheral.delegate = self
             peripheral.discoverServices(nil)
@@ -245,7 +283,7 @@ class TableViewController: UITableViewController, CBCentralManagerDelegate, CBPe
 
         var sectionNum:Int = 0
 
-        if self.isConnect! {
+        if self.isConnect! && self.isPownOn! {
             sectionNum = 3  //info, knob, tem
         }else{
             sectionNum = 1  //info
@@ -263,14 +301,14 @@ class TableViewController: UITableViewController, CBCentralManagerDelegate, CBPe
             rows = 1
             break;
         case 1:
-            if self.isConnect! {
+            if self.isConnect! && self.isPownOn! {
                 rows = 1
             }else{
                 rows = 0
             }
             break;
         case 2:
-            if self.isConnect! {
+            if self.isConnect! && self.isPownOn! {
                 rows = 1
             }else{
                 rows = 0
@@ -287,7 +325,7 @@ class TableViewController: UITableViewController, CBCentralManagerDelegate, CBPe
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         var height:CGFloat = 0
 
-        if self.isConnect! {
+        if self.isConnect! && self.isPownOn! {
             if section != 0 {
                 height = 24.0
             }
@@ -300,7 +338,7 @@ class TableViewController: UITableViewController, CBCentralManagerDelegate, CBPe
 
         var headerView = UIView()
 
-        if self.isConnect! {
+        if self.isConnect! && self.isPownOn! {
             if section != 0 {
                 //view
                 headerView = UIView.init(frame: CGRect.init(origin: CGPoint.init(x: 0, y: 0), size: CGSize.init(width: self.tableView.frame.size.width, height: 24.0)))
@@ -357,6 +395,8 @@ class TableViewController: UITableViewController, CBCentralManagerDelegate, CBPe
             let timerCell = tableView.dequeueReusableCell(withIdentifier: "TimerCell", for: indexPath) as! TimerCell
 
             timerCell.parentVCtrl = self
+
+            timerCell.segmentBtn.selectedSegmentIndex = 0
             
             cell = timerCell
 
